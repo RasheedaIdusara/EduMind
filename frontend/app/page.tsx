@@ -1,4 +1,5 @@
 "use client";
+import Navbar from "@/components/Navbar";
 import { FormEvent, useState } from "react";
 
 const Home = () => {
@@ -43,42 +44,10 @@ const Home = () => {
 
     <main className="min-h-screen bg-slate-950 text-white">
       {/* Navbar */}
-      <header className="border-b border-white/10">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
-
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-500 font-bold text-slate-950">
-              E
-            </div>
-
-            <span className="text-xl font-bold">
-              Edu<span className="text-teal-400">Mind</span>
-            </span>
-          </div>
-
-          <span className="rounded-full border border-teal-500/30 bg-teal-500/10 px-4 py-2 text-xs font-medium text-teal-300">
-            AI Learning Assistant
-          </span>
-        </nav>
-      </header>
+      <Navbar />
 
       <section className="mx-auto max-w-6xl px-5 py-16 md:py-24">
-        <div className="mx-auto max-w-3xl text-center">
-
-          <div className="mb-6 inline-flex rounded-full border border-teal-500/30 bg-teal-500/10 px-4 py-2 text-sm text-teal-300">
-            Your Smart Learning Companion
-          </div>
-
-          <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
-            Learn Smarter with
-            <span className="text-teal-400"> EduMind</span>
-          </h1>
-
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-400 md:text-lg">
-            Ask questions, explore concepts and prepare for exams
-            with your personal AI learning assistant.
-          </p>
-        </div>
+        
 
         {/* Question Card */}
         <div className="mx-auto mt-12 max-w-3xl rounded-3xl border border-white/10 bg-slate-900 p-5 shadow-2xl md:p-8">
