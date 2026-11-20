@@ -1,5 +1,6 @@
 "use client";
 import AnswerCard from "@/components/AnswerCard";
+import Hero from "@/components/Herosection";
 import Navbar from "@/components/Navbar";
 import QuestionForm from "@/components/QuestionForm";
 import { FormEvent, useState } from "react";
@@ -17,7 +18,10 @@ const Home = () => {
   async function handleGenerate(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!question.trim()) {
+    const trimmedQuestion = question.trim();
+
+
+    if (!trimmedQuestion) {
       setError("Please enter a question first.");
       return;
     }
@@ -26,18 +30,46 @@ const Home = () => {
     setAnswer("");
     setLoading(true);
 
-    await new Promise((resolve) =>
-      setTimeout(resolve, 800)
-    );
+    try {
 
-    const demoAnswer =
-      mode === "explain"
-        ? `Demo explanation for: "${question.trim()}"`
-        : `Demo quiz for: "${question.trim()}"`;
+      const response = await fetch("/api/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question: trimmedQuestion, mode }),
+      });
 
-    setAnswer(demoAnswer);
-    setLoading(false);
+      const data = await response.json();
 
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      if (!data.answer) {
+        throw new Error("No answer received from AI.");
+      }
+
+      setAnswer(data.answer);
+
+
+
+
+    } catch (error) {
+
+      console.error("AI Generation Error:", error);
+
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
 
   }
 
@@ -61,6 +93,8 @@ const Home = () => {
     <main className="min-h-screen bg-slate-950 text-white">
       {/* Navbar */}
       <Navbar />
+
+      <Hero />
 
       <section className="mx-auto max-w-6xl px-5 py-16 md:py-24">
 
